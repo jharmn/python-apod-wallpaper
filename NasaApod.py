@@ -7,8 +7,9 @@ from urllib import urlretrieve
 from urlparse import urlparse
 from textwrap import wrap
 from PIL import Image, ImageColor, ImageEnhance, ImageFont, ImageDraw, ImageOps
+from bowshock import apod
 import requests
-import os, subprocess, ConfigParser
+import os
 
 class NasaApod:
     def __init__(self, download_path = "~/wallpapers", font="OpenSans-Regular.ttf",
@@ -16,7 +17,6 @@ class NasaApod:
             end_date=datetime.today(), start_date=datetime(1995, 06, 20),
             screen_width=gdk.screen_width(), screen_height=gdk.screen_height(),
             **kwargs):
-        self._read_config()
 
         self.FONT_SIZE = font_size
         self.FONT_COLOR = font_color
@@ -32,28 +32,18 @@ class NasaApod:
 
         self.SCREEN_WIDTH = screen_width
         self.SCREEN_HEIGHT = screen_height
+        print "Resolution: %sX%s" % (self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
+
+        self.API_KEY = os.environ["NASA_API_KEY"]
 
         self.DOWNLOAD_PATH = os.path.expanduser(download_path)
         if not os.path.exists(self.DOWNLOAD_PATH):
             os.makedirs(self.DOWNLOAD_PATH)
 
 
-    def _read_config(self):
-        config = ConfigParser.RawConfigParser()
-        config.read("config.ini")
-        if config.has_section("apod") and config.has_option("apod", "api_key"):
-            self.API_KEY = config.get("apod","api_key")
-            self.API_URL = "https://api.nasa.gov/planetary/apod?api_key=%s&format=JSON" % self.API_KEY
-        else:
-            raise Error("Config.ini must contain [apod] section with 'api_key'")
-
 
     def call_api(self, d):
-        url = "%s&date=%s" % (self.API_URL, self._format_date(d))
-        print "Downloading %s in %sX%s from %s" % (self._format_date(d), self.SCREEN_WIDTH, self.SCREEN_HEIGHT, url)
-
-        r = requests.get(url);
-        return r.json();
+        return apod.apod(date=self._format_date(d)).json()
 
     def download_random(self):
         rdate = self._random_date(self.START_DATE, self.END_DATE).date()
@@ -65,6 +55,7 @@ class NasaApod:
 
     def download_single(self, d):
         t = self.call_api(d)
+        print "Downlading for date: %s" % self._format_date(d)
         media_type = t["media_type"]
         if media_type == "image":
             file = os.path.join(self.DOWNLOAD_PATH, self._format_date(d)+"_"+self._image_name(t["url"]))

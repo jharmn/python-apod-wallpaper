@@ -6,11 +6,7 @@ By default, adds explanation of daily images in watermarked footer.
 # Install
 ## Configuration
 Get your NASA API key [here](https://api.nasa.gov/index.html#apply-for-an-api-key)
-Create `config.ini` with the following:
-```
-[apod]
-api_key = <your api key here"
-```
+Set `NASA_API_KEY` environment variable
 
 ## Dependencies
 TODO
@@ -37,4 +33,5 @@ import NasaApod
 NasaApod().download_random()
 ```
 # Credit
+NASA APOD access via [Bowshock](https://github.com/emirozer/bowshock) wrapper library
 Open Sans font from [Font Squirrel](http://www.fontsquirrel.com/)
