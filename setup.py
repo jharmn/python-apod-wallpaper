@@ -68,7 +68,7 @@ Development
 """
 
 from io import open
-import os, re
+import os, sys, re, ast
 from setuptools import setup
 from pip.req import parse_requirements
 
@@ -77,7 +77,8 @@ try:
 except ImportError:
     from distutils.core import setup
 
-with open('flask/__init__.py', 'rb') as f:
+_version_re = re.compile(r'__version__\s+=\s+(.*)')
+with open('apod_wallpaper/__init__.py', 'rb') as f:
     version = str(ast.literal_eval(_version_re.search(
         f.read().decode('utf-8')).group(1)))
 
@@ -108,7 +109,6 @@ setup(
     package_dir={'apod_wallpaper': 'apod_wallpaper'},
     install_requires=reqs,
     license='Apache 2.0',
-    zip_safe=False,
     classifiers=(
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
