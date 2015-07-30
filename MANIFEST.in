@@ -1,1 +1,1 @@
-include README.rst LICENSE test_apod.py requirements.txt
+include README.rst LICENSE test_apod.py requirements.txt apod_wallpaper/OpenSans-Regular.ttf
