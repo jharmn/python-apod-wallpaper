@@ -1,1 +1,1 @@
-include README.md LICENSE test_apod.py requirements.txt
+include README.rst LICENSE test_apod.py requirements.txt

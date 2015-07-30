@@ -9,7 +9,7 @@ TODO: Docs
 
 """
 __title__ = 'apod-wallpaper'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __author__ = 'Jason Harmon'
 __license__ = 'Apache 2.0'
 __copyright__ = 'Copyright 2015 Jason Harmon'
