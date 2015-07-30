@@ -1,0 +1,5 @@
+Pillow>=2.9.0
+argparse>=1.2.1
+bowshock>=0.0.2
+future>=0.15.0
+requests>=2.4.0
