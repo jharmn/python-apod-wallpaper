@@ -10,7 +10,7 @@ Utilizes NASA APOD API to generate wallpapers with explanations.
 
 Install
 -------
-pip install apod_wallpaper
+pip install apod-wallpaper
 
 Configuration
 -------------
