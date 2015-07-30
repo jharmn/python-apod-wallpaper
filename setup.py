@@ -68,7 +68,7 @@ Development
 """
 
 from io import open
-import os, sys, re, ast
+import os, sys, re, ast, subprocess
 from setuptools import setup
 from pip.req import parse_requirements
 
