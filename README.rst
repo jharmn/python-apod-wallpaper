@@ -1,11 +1,11 @@
 apod-wallpaper
 ==============
 
-Utilizes NASA APOD API to generate wallpapers with explanations. \* Will
-download images (single, random or all in date range) \* Only supports
-image media types (no video). \* Uses tkinter to attempt to size
-wallpaper if not specified. \* By default, adds explanation of daily
-images in watermarked footer.
+Utilizes NASA APOD API to generate wallpapers with explanations. 
+- Will download images (single, random or all in date range) 
+- Only supports image media types (no video). 
+- Uses tkinter to attempt to size wallpaper if not specified. 
+- By default, adds explanation of daily images in watermarked footer.
 
 Install
 =======
@@ -14,11 +14,18 @@ Install
 
     pip install apod-wallpaper
 
+
+For issues installing PIL dependency:
+- Install libjpeg-dev & freetype-dev with your package manager (apt, yum, brew, etc)
+::
+    
+    pip install PIL --allow-external PIL --allow-unverified PIL
+
 Configuration
 -------------
 
-Get your NASA API key
-`here <https://api.nasa.gov/index.html#apply-for-an-api-key>`__
+Get your 
+`NASA API key <https://api.nasa.gov/index.html#apply-for-an-api-key>`__
 
 Set ``NASA_API_KEY`` environment variable to your key.
 
@@ -73,6 +80,7 @@ Optional arguments
 ::
 
     download_path: (optional) File location to store downloaded image (default ~/wallpapers).
+    overwrite: (optional) Overwrite existing files in download_path (default: False)
     screen_width: (optional) Pixels of width to make image. Large than original will add a black background. If not specified, OS detection of screen width will be attempted.
     screen_height: (optional) Pixels of height to make image. Large than original will add a black background. If not specified, OS detection of screen width will be attempted.
     font: (optional) TrueType font to apply in image footer (default OpenSans-Regular.ttf).

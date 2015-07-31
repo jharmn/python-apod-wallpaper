@@ -17,6 +17,7 @@ __location__ = os.path.realpath(
 
 """Downloads a NASA APOD image, with optional post-processing.
 :param download_path: (optional) File location to store downloaded image (default ~/wallpapers).
+:param overwrite: (optional) Overwrite existing files in download_path (default: False)
 :param screen_width: (optional) Pixels of width to make image. Large than original will add a black background. If not specified, OS detection of screen width will be attempted.
 :param screen_height: (optional) Pixels of height to make image. Large than original will add a black background. If not specified, OS detection of screen width will be attempted.
 :param font: (optional) TrueType font to apply in image footer (default OpenSans-Regular.ttf).
@@ -47,20 +48,24 @@ def download_bulk(start_date=date(1995, 6, 20), end_date=date.today(),
 """
 :param: single_date: (optional) Specific date to download (default date.today())
 """
-def download_single(single_date=date.today(), download_path="~/wallpapers", screen_width=None, screen_height=None,
+def download_single(single_date=date.today(), download_path="~/wallpapers", overwrite=False, 
+        screen_width=None, screen_height=None,
         **kwargs):
     print("Downloading for date: {}".format(date_utils.format_date(single_date)))
 
-    json = _call_api(single_date)
-    media_type = json["media_type"]
-    if media_type == "image":
-        file = file_utils.download_url(json["url"], single_date, download_path)
-
-        wallpaperize(file, json["explanation"],
-            screen_width=screen_width, screen_height=screen_height,
-            **kwargs)
+    if overwrite or file_utils.file_date_exists(download_path, single_date) == False:
+        json = _call_api(single_date)
+        media_type = json["media_type"]
+        if media_type == "image":
+            file = file_utils.download_url(json["url"], single_date, download_path)
+    
+            wallpaperize(file, json["explanation"],
+                screen_width=screen_width, screen_height=screen_height,
+                **kwargs)
+        else:
+            print("Media type {} not saveable".format(media_type))
     else:
-        print("Media type {} not saveable".format(media_type))
+        print("File exists. Use 'overwrite=True' to overwrite")
 
 def wallpaperize(file_path, msg,
         screen_width=None, screen_height=None,

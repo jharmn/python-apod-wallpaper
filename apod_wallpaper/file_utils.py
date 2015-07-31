@@ -2,6 +2,7 @@ import os
 from io import open
 from future.standard_library import install_aliases
 install_aliases()
+from glob import glob
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
@@ -30,3 +31,13 @@ def file_path(url, download_path, single_date):
     image_name = path.split("/")[-1]
     return os.path.join(download_path, 
         date_utils.format_date(single_date)+"_"+image_name)
+
+def file_date_glob(download_path, single_date):
+    path = expand_download_path(download_path)    
+    path_glob = os.path.join(path, date_utils.format_date(single_date))
+    path_glob += "*"
+    return path_glob
+
+def file_date_exists(download_path, single_date):
+    date_list = glob(file_date_glob(download_path, single_date))
+    return len(date_list) > 0
