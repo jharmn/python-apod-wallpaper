@@ -3,6 +3,7 @@ from codecs import open
 import os, sys, re, ast, subprocess
 from setuptools import setup
 from pip.req import parse_requirements
+from pip import download
 
 try:
     from setuptools import setup
@@ -17,7 +18,7 @@ with open('apod_wallpaper/__init__.py', 'rb') as f:
 with open('README.rst', 'r', 'utf-8') as f:
         readme = f.read()
 
-install_reqs = parse_requirements("requirements.txt")
+install_reqs = parse_requirements("requirements.txt", session=download.PipSession())
 reqs = [str(ir.req) for ir in install_reqs]
 
 if sys.argv[-1] == 'publish':
